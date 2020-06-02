@@ -1,13 +1,19 @@
 // core modules--> look for a global module in node js
 const http = require('http');
-const routes = require('./routes')
 
+const express = require('express');
 
-const server = http.createServer(routes.handler);
-console.log(routes.someText);
+//express exports as a function
+const app = express();
 
+app.use((req, res, next)=>{
+    console.log('in the middleware ');
+    next();//allow request to continue to the next middleware
+});
 
+app.use((req, res, next)=>{
+    console.log('in another middleware ');
+    res.send('<h1>Hello from expressJS</h1>');
+});
 
-//node js will listen to incoming requests.
-//default is localhost and 8000 port
-server.listen(3000);
+app.listen(3000);
